@@ -4,7 +4,7 @@ var router = express.Router();
 router.post('/event_handler', function (req, res) {
   var payload = req.body.payload;
 
-  var h = req.get('HTTP_X_GITHUB_EVENT');
+  var h = req.get('X-GitHub-Event');
   if (!h) res.status(403).send("Doesn't look like the request is from Github :/");
   if (h === "pull_request") {
     if (payload.action === "opened") {
