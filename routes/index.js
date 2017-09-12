@@ -20,14 +20,17 @@ router.post('/event_handler', function (req, res) {
           res.status(500).send("Something went wrong with the udpate request to the Github API");  
         }
         console.log(cbresp); //what does come back?
-        res.status(200).send("Yah that worked! PR title: " + pr.title);
+        res.status(200).send("PR with title " + pr.title + " set to pending");
       });
     }
     else {
-      console.log("action not opened:" + payload.action);
+      res.status(200).send("PR actions other than opened arent supported at the moment");
     }
   }
-  //res.status(200).send("Not a PR so i didn't do anything. Header: " + h);
+  else {
+    res.status(200).send("Not a PR so i didn't do anything. Header: " + h);
+  }
+  
 
 });
 
