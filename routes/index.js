@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.post('/event_handler', function (req, res) {
 
-  var payload = req.body.payload;
+  var payload = JSON.parse(req.body.payload);
   res.set('Access-Control-Allow-Origin', "*");
   res.set('Access-Control-Allow-Methods', 'GET, POST');
   
