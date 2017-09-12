@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/event_handler', function (req, res) {
-  //var payload = req.body.payload;
+  var payload = req.body.payload;
+  console.log(payload);
 
   var h = req.get('X-GitHub-Event');
   if (!h) res.status(403).send("Doesn't look like the request is from Github :/");
