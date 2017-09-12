@@ -15,17 +15,16 @@ function GithubAPI() {
         ghrepo.status(pr.head.sha, {
             "state": status,
             "target_url": "",
-            "description": "Build pending. yeah."
+            "description": "Build " + status + ". yeah."
         }, cb);
     }
 
     function updateStatusPromiseWrapper(pr, status) {
         return new Promise((resolve, reject) => {
-            updateStatus(pr, status, function (err, cbresp) {
+            updateStatus(pr, status, function (err) {
                 if (err) {
                     reject("Something went wrong with the udpate request to the Github API");
                 }
-                console.log(cbresp); //what does come back?
                 resolve("PR with title " + pr.title + " set to pending");
             });
             
@@ -43,7 +42,7 @@ function GithubAPI() {
         //2) kick off backstop
         //3) on backstop return, update status to good or bad
         var pr = payload.pull_request;
-        updateStatusPromiseWrapper(pr, "pending").then(function() {
+        return updateStatusPromiseWrapper(pr, "pending").then(function() {
             var vgt = new backstopVgTest(); //dont know what params to send yet....
             vgt.runTest().then(res => {
                 console.log(res);
