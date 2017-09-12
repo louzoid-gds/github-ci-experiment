@@ -1,0 +1,33 @@
+{
+  "name": "github-ci-experiment",
+  "version": "0.0.1",
+  "private": true,
+  "license": "",
+  "author": "louzoid-gds",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": ">=4.3.2"
+  },
+  "scripts": {
+    "lint": "esw app.js routes/* routes/*/* --color",
+    "lint:watch": "npm run lint -- --watch",
+    "security-check": "nsp check",
+    "start": "node app.js"
+  },
+  "devDependencies": {
+    "eslint": "3.8.1",
+    "eslint-plugin-import": "2.0.1",
+    "eslint-watch": "2.1.14",
+    "nsp": "^2.6.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "node-fetch": "^1.7.1",
+    "request": "^2.81.0",
+    "safe-buffer": "5.0.1"
+  }
+}
