@@ -16,7 +16,7 @@ router.post('/event_handler', function (req, res) {
   gh.handleEvent(h, payload).then(output => {
     res.status(200).send(output);
   }).catch(err => {
-    res.status(403).send(err); //change so can reject with suitable params
+    res.status(200).send(err); //change so can reject with suitable params
   });
 
 });

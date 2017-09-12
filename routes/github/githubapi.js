@@ -1,5 +1,6 @@
 'use strict';
 var github = require('octonode');
+var backstopVgTest = require('../backstop/vgbackstop');
 
 //what arent my editor config settings working..!?
 function GithubAPI() {
@@ -18,13 +19,9 @@ function GithubAPI() {
         }, cb);
     }
 
-    function handlePullRequest(payload) {
+    function updateStatusPromiseWrapper(pr, status) {
         return new Promise((resolve, reject) => {
-            if(payload.action != "opened") {
-                reject("PR actions other than opened arent supported at the moment");
-            }
-            var pr = payload.pull_request;
-            updateStatus(pr, "pending", function (err, cbresp) {
+            updateStatus(pr, status, function (err, cbresp) {
                 if (err) {
                     reject("Something went wrong with the udpate request to the Github API");
                 }
@@ -32,6 +29,32 @@ function GithubAPI() {
                 resolve("PR with title " + pr.title + " set to pending");
             });
             
+        });
+
+    }
+
+    function handlePullRequest(payload) {
+
+        if(payload.action != "opened") {
+            return Promise.reject("PR actions other than opened arent supported at the moment");
+        }
+
+        //1) set status to pending
+        //2) kick off backstop
+        //3) on backstop return, update status to good or bad
+        var pr = payload.pull_request;
+        updateStatusPromiseWrapper(pr, "pending").then(function() {
+            var vgt = new backstopVgTest(); //dont know what params to send yet....
+            vgt.runTest().then(res => {
+                console.log(res);
+                var status = "success";
+                return updateStatusPromiseWrapper(pr, status);
+            }).catch(err => {
+                return Promise.reject(err);
+            });
+        })
+        .catch(err => {
+            return Promise.reject(err);
         });
     }
 
