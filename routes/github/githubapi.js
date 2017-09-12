@@ -42,7 +42,7 @@ function GithubAPI() {
             return handlePullRequest(payload);
         }
 
-        return new Promise().reject("Only PR headers supported at the moment");
+        return Promise.reject("Only PR headers supported at the moment");
 
     }
 
