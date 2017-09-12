@@ -27,6 +27,7 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "node-fetch": "^1.7.1",
+    "octonode": "^0.8.0",
     "request": "^2.81.0",
     "safe-buffer": "5.0.1"
   }
