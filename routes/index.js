@@ -29,7 +29,7 @@ router.post('/event_handler', function (req, res) {
 });
 
 function updateStatus(pr, status, cb) {
-  var tk = process.env.GH-ACCESS-TOKEN;
+  var tk = process.env.GH_ACCESS_TOKEN;
   var client = github.client(tk);
 
   var ghrepo = client.repo(pr.base.repo.full_name);
