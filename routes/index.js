@@ -13,7 +13,7 @@ router.post('/event_handler', function (req, res) {
     }
   }
 
-  res.status(200).send("Not a PR so i didn't do anything");
+  res.status(200).send("Not a PR so i didn't do anything. Header: " + h + ". Action: " + payload.action);
 
 });
 
